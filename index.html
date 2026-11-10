@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="auto">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Transmute — Private In-Browser File Converter</title>
-  <meta name="description" content="Fast, private, client-side file converter. Convert images, PDFs, and Word documents in your browser with zero server uploads.">
-  <meta name="theme-color" content="#0a7e8c">
+  <meta name="description" content="Fast, private, client-side file converter. Convert images, PDFs, SVGs, and Word documents directly in your browser with zero server uploads.">
+  <meta name="theme-color" content="#0d9488">
+  <script>
+    (function() {
+      try {
+        var saved = localStorage.getItem('transmute-theme');
+        if (saved === 'dark' || saved === 'light') {
+          document.documentElement.setAttribute('data-theme', saved);
+        }
+      } catch (e) {}
+    })();
+  </script>
   <link rel="icon" type="image/svg+xml" href="Images/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="Images/favicon.png">
   <link rel="apple-touch-icon" sizes="180x180" href="Images/apple-touch-icon.png">
@@ -15,21 +25,52 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="blob blob-1" aria-hidden="true"></div>
-  <div class="blob blob-2" aria-hidden="true"></div>
+  <div class="ambient-glow" aria-hidden="true"></div>
 
-  <main class="wrap">
-    <header class="hero">
-      <div class="brand">
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-brand" aria-label="Transmute Home">
         <div class="logo">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
             <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8v12M17 20l4-4M17 20l-4-4"/>
           </svg>
         </div>
-        <span class="brand-name">Transmute</span>
+        <span class="brand-title">Transmute</span>
+        <span class="version-tag">v2.0</span>
+      </a>
+
+      <div class="nav-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span>Local Engine &bull; 100% Private</span>
+      </div>
+
+      <div class="nav-actions">
+        <nav class="nav-links">
+          <a href="#features" class="nav-link">Features</a>
+          <a href="#how-it-works" class="nav-link">How it works</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+        </nav>
+        <button type="button" id="themeToggle" class="btn-theme" aria-label="Toggle color theme" title="Toggle color theme">
+          <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-badge">
+        <span class="pulse-indicator"></span>
+        Zero Server Uploads &bull; Instant Client-Side
       </div>
       <h1>Convert files <span>in seconds</span></h1>
-      <p>High-speed, private conversions right inside your browser. No files are uploaded to any server.</p>
+      <p class="hero-subtext">Images, PDFs, SVGs, and Word documents converted safely inside your browser memory. Your files never touch any external server.</p>
+      
       <div class="badges">
         <span class="badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -37,81 +78,131 @@
         </span>
         <span class="badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-          Zero Uploads
+          Hardware Accelerated
         </span>
         <span class="badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
           Unlimited &amp; Free
         </span>
+        <span class="badge clipboard-badge">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+          Ctrl + V to Paste
+        </span>
       </div>
-    </header>
+    </section>
 
-    <section class="card">
+    <section class="card" id="converter">
       <div class="step-header">
         <span class="step-num">1</span>
-        <h2>Choose conversion format</h2>
+        <div class="step-title-wrap">
+          <h2>Choose conversion format</h2>
+          <span class="step-desc">Select target format or filter by category</span>
+        </div>
+      </div>
+
+      <div class="format-filters" role="tablist" aria-label="Format categories">
+        <button type="button" class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All (9)</button>
+        <button type="button" class="filter-tab" data-filter="images" role="tab" aria-selected="false">Images (7)</button>
+        <button type="button" class="filter-tab" data-filter="documents" role="tab" aria-selected="false">PDF &amp; Docs (2)</button>
       </div>
 
       <input type="hidden" id="mode" value="img2pdf">
       <div class="chips" id="chips" role="radiogroup" aria-label="Conversion format">
-        <button type="button" class="chip active" role="radio" aria-checked="true" tabindex="0" data-mode="img2pdf">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <button type="button" class="chip active" role="radio" aria-checked="true" tabindex="0" data-mode="img2pdf" data-category="documents">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           <span>Images <i>→</i> PDF</span>
         </button>
-        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="png2jpg">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="png2jpg" data-category="images">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
           <span>PNG <i>→</i> JPG</span>
         </button>
-        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="png2webp">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="png2webp" data-category="images">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           <span>PNG <i>→</i> WebP</span>
         </button>
-        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="jpg2webp">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="jpg2webp" data-category="images">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
           <span>JPG <i>→</i> WebP</span>
         </button>
-        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="webp2png">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="jpg2png" data-category="images">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          <span>JPG <i>→</i> PNG</span>
+        </button>
+        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="webp2png" data-category="images">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
           <span>WebP <i>→</i> PNG</span>
         </button>
-        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="webp2jpg">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="webp2jpg" data-category="images">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
           <span>WebP <i>→</i> JPG</span>
         </button>
-        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="word2pdf">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="svg2png" data-category="images">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><line x1="8.59" y1="8.59" x2="15.42" y2="15.42"/><line x1="6" y1="9" x2="6" y2="21"/><line x1="18" y1="3" x2="18" y2="15"/></svg>
+          <span>SVG <i>→</i> PNG</span>
+        </button>
+        <button type="button" class="chip" role="radio" aria-checked="false" tabindex="-1" data-mode="word2pdf" data-category="documents">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
           <span>Word <i>→</i> PDF</span>
         </button>
       </div>
 
-      <div class="quality-row" id="qualityRow">
-        <label for="quality">Output Quality</label>
-        <div class="quality-selector">
-          <input type="range" id="quality" min="0.5" max="1.0" step="0.05" value="0.92">
-          <span id="qualityVal">92%</span>
+      <div class="tuning-panel" id="tuningPanel">
+        <div class="tuning-item" id="qualityRow">
+          <div class="tuning-label-wrap">
+            <label for="quality">Output Quality</label>
+            <span class="tuning-sub">Balance file size vs fidelity</span>
+          </div>
+          <div class="quality-selector">
+            <input type="range" id="quality" min="0.4" max="1.0" step="0.05" value="0.92">
+            <span id="qualityVal" class="val-badge">92%</span>
+          </div>
+        </div>
+
+        <div class="tuning-item" id="scaleRow">
+          <div class="tuning-label-wrap">
+            <label for="scaleSelect">Image Dimension</label>
+            <span class="tuning-sub">Optional downscaling</span>
+          </div>
+          <div class="scale-selector">
+            <select id="scaleSelect" class="select-input" aria-label="Scale image dimensions">
+              <option value="1">100% (Original)</option>
+              <option value="0.75">75% Scale</option>
+              <option value="0.5">50% Scale</option>
+              <option value="0.25">25% Scale</option>
+            </select>
+          </div>
         </div>
       </div>
 
       <div class="step-header">
         <span class="step-num">2</span>
-        <h2>Add your files</h2>
+        <div class="step-title-wrap">
+          <h2>Add your files</h2>
+          <span class="step-desc">Drag &amp; drop, browse, or press Ctrl+V</span>
+        </div>
       </div>
 
-      <div id="drop" class="drop" tabindex="0" role="button" aria-label="Upload files">
+      <div id="drop" class="drop" tabindex="0" role="button" aria-label="Upload files area">
         <div class="drop-icon">
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
             <polyline points="17 8 12 3 7 8"/>
             <line x1="12" y1="3" x2="12" y2="15"/>
           </svg>
         </div>
-        <p class="drop-text"><strong>Click to select</strong> or drag and drop files here</p>
+        <p class="drop-text"><strong>Click to browse</strong> or drag &amp; drop files here</p>
+        <div class="drop-shortcuts">
+          <span class="shortcut-pill"><kbd>Ctrl</kbd> + <kbd>V</kbd> to paste clipboard images</span>
+        </div>
         <small id="hint" class="drop-hint"></small>
-        <input type="file" id="file" multiple hidden>
+        <input type="file" id="file" multiple hidden aria-label="File input">
       </div>
 
       <div class="file-summary" id="fileSummary" hidden>
-        <span id="fileCount">0 files selected</span>
+        <div class="summary-left">
+          <span id="fileCount" class="summary-count">0 files selected</span>
+          <span id="totalSize" class="summary-size"></span>
+        </div>
         <button type="button" id="clearAll" class="btn-text">Clear all</button>
       </div>
 
@@ -119,12 +210,16 @@
 
       <div class="step-header">
         <span class="step-num">3</span>
-        <h2>Convert &amp; download</h2>
+        <div class="step-title-wrap">
+          <h2>Convert &amp; download</h2>
+          <span class="step-desc">Instant client-side processing</span>
+        </div>
       </div>
 
       <button id="convert" class="btn-convert" disabled>
-        <span>Convert now</span>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        <span class="btn-spinner" id="convertSpinner" hidden></span>
+        <span id="convertText">Convert now</span>
+        <svg class="btn-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
 
       <div class="progress-wrap" id="progressWrap" hidden>
@@ -135,23 +230,167 @@
 
       <div id="resultsActions" class="results-actions" hidden>
         <button type="button" id="downloadZip" class="btn-zip">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download all (.ZIP)
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download all as ZIP
+        </button>
+        <button type="button" id="startNewBatch" class="btn-reset">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
+          New batch
         </button>
       </div>
 
       <ul id="results" class="results"></ul>
     </section>
 
+    <section class="section-features" id="features">
+      <div class="section-title">
+        <span class="sub-badge">Architecture</span>
+        <h2>Engineered for privacy &amp; speed</h2>
+        <p>No remote queues. No server storage. Complete hardware-driven execution.</p>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>100% In-Browser Privacy</h3>
+          <p>Files never leave your local device. Conversions run directly in browser RAM via Canvas &amp; WebAssembly, guaranteeing zero server retention.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3>Hardware Accelerated</h3>
+          <p>No waiting in cloud queues or uploading large files across slow connections. Your machine's CPU and GPU process everything instantaneously.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3>Batch &amp; Clipboard Power</h3>
+          <p>Paste screenshots straight with <kbd>Ctrl+V</kbd>, fine-tune compression, reorder pages, and bundle dozens of results into a single ZIP archive.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-steps" id="how-it-works">
+      <div class="section-title">
+        <span class="sub-badge">Workflow</span>
+        <h2>How it works</h2>
+        <p>Three straightforward steps to transform your files with zero installation.</p>
+      </div>
+
+      <div class="steps-flow">
+        <div class="step-card">
+          <div class="step-badge">01</div>
+          <h3>Select Target Format</h3>
+          <p>Choose from Images to PDF, PNG, JPG, WebP, SVG, or Word to PDF and adjust quality or scaling if needed.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">02</div>
+          <h3>Add or Paste Files</h3>
+          <p>Drag files into the dropzone, click to browse, or simply press <kbd>Ctrl+V</kbd> to paste an image straight from your clipboard.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-badge">03</div>
+          <h3>Convert &amp; Save</h3>
+          <p>Click Convert to transform files in milliseconds. Download individual files, copy to clipboard, or grab everything in a single ZIP.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-faq" id="faq">
+      <div class="section-title">
+        <span class="sub-badge">FAQ</span>
+        <h2>Frequently asked questions</h2>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary class="faq-summary">
+            <span>Are my files uploaded or stored on any server?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-content">
+            <p><strong>Never.</strong> Transmute is 100% client-side. File conversion runs inside your browser using JavaScript and HTML5 Canvas APIs. You can even disconnect your internet connection while converting and it will work smoothly.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Is there any file size limit or daily cap?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-content">
+            <p>There are no arbitrary website limits, subscriptions, or paywalls. You can convert as many files as your device memory can accommodate.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>How does the clipboard paste feature work?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-content">
+            <p>Take a screenshot using your system shortcut (<kbd>Win + Shift + S</kbd> on Windows or <kbd>Cmd + Shift + 4</kbd> on Mac), then click anywhere on this page and press <kbd>Ctrl + V</kbd>. The image will immediately enter the queue ready for conversion.</p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-summary">
+            <span>Can I reorder pages for the Images to PDF converter?</span>
+            <svg class="faq-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 12 15 18 9"/></svg>
+          </summary>
+          <div class="faq-content">
+            <p>Yes. In Images to PDF mode, each uploaded file shows Up (&uarr;) and Down (&darr;) buttons so you can arrange your pages in the exact sequence you desire before generating the document.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
     <footer class="footer">
+      <div class="footer-top">
+        <a href="#" class="footer-brand">
+          <div class="logo logo-small">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+              <path d="M7 16V4M7 4L3 8M7 4L11 8M17 8v12M17 20l4-4M17 20l-4-4"/>
+            </svg>
+          </div>
+          <span>Transmute</span>
+        </a>
+        <button type="button" id="backToTop" class="btn-top" aria-label="Back to top">
+          Back to top &uarr;
+        </button>
+      </div>
       <p class="author">Made by Mr. Wasif Ahmed Khan</p>
-      <p class="privacy-note">&bull; Client-side processing engine &bull; Private &bull;</p>
+      <p class="privacy-note">&bull; Client-side processing engine &bull; Private &bull; Open Web Standards &bull;</p>
     </footer>
   </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <div class="modal-backdrop" id="previewModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <span id="modalTitle" class="modal-title">Image Preview</span>
+        <button type="button" class="btn-modal-close" id="modalClose" aria-label="Close preview">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImg" class="modal-preview-img" alt="Enlarged Preview">
+      </div>
+      <div class="modal-footer">
+        <span id="modalMeta" class="modal-meta"></span>
+        <a id="modalDownload" class="btn-download" download>Download</a>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="alert" aria-live="assertive" hidden></div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <script src="script.js"></script>
 </body>
